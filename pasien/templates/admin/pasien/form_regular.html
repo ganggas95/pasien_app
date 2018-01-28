@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+        <div class="ui grid">
+            <div class="eight wide column">
+                <div class="ui segment">
+                    <div class="ui container">
+
+                        {%if pasien %}
+                        <form class="ui form" name="rawat_jalan" method="POST">
+                            <div class="ui two fields">
+                                <div class="field">
+                                    <label>Keluhan</label>
+                                    <textarea rows="2" name="keluhan" placeholder="Keluhan...."></textarea>
+                                </div>
+                                <div class="field">
+                                    <label>Tindakan</label>
+                                    <textarea rows="2" name="tindakan" placeholder="Tindakan....."></textarea>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Diagnosa</label>
+                                <textarea name="diagnosa" placeholder="Diagnosa....."></textarea>
+                            </div>
+                            <div class="field">
+                                <div class="fields">
+                                    <div class="eight wide field">
+                                        <label>Status</label>
+                                        <select name="status" placeholder="Status pasien setelah selesai pelayanan">
+                                          <option value="sembuh">Sembuh</option>
+                                          <option value="rawat_jalan">Belum Sembuh (Rawat Jalan).</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="ui teal button icon" type="submit">
+                                <i class="save icon"></i> Simpan</button>
+                            <a class="ui negative button icon" href="{{url_for('register_pasien', no_pasien=pasien.no_pasien, cek_old=True, visible_old=True)}}">
+                                <i class="remove icon"></i> Batal</a>
+                        </form>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%include 'layout/toastr.html'%}
+</body>
+
+</html>

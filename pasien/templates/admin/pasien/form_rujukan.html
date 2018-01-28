@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+        <div class="ui grid">
+            <div class="eight wide column">
+                <div class="ui segment">
+                    <div class="ui container">
+
+                        {%if pasien %}
+                        <form class="ui form" name="rawat_inap" method="POST">
+                            <div class="ui two fields">
+                                <div class="field">
+                                    <label>Tanggal Masuk</label>
+                                    <input type="date" name="tanggal_masuk" placeholder="Tanggal Masuk...."></input>
+                                </div>
+                                <div class="field">
+                                    <label>Tanggal Keluar</label>
+                                    <input type="date" name="tanggal_keluar" placeholder="Tanggal Keluar....."></input>
+                                </div>
+                            </div>
+                            <div class="ui two fields">
+                                <div class="field">
+                                    <label>Asal</label>
+                                    <input type="text" name="asal" placeholder="Instansi asal...."></input>
+                                </div>
+                                <div class="field">
+                                    <label>Keterangan </label>
+                                    <input type="text" name="keterangan" placeholder="Keterangan dari instansi asal....."></input>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Diagnosa</label>
+                                <textarea name="diagnosa" placeholder="Diagnosa....."></textarea>
+                            </div>
+                            <div class="field">
+                                <div class="fields">
+                                    <div class="eight wide field">
+                                        <label>Status</label>
+                                        <input type="text" name="status" placeholder="Status pasien setelah selesai pelayanan">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="ui teal button icon" type="submit">
+                                <i class="save icon"></i> Simpan</button>
+                            <a class="ui negative button icon" href="{{url_for('register_pasien', no_pasien=pasien.no_pasien, cek_old=True, visible_old=True)}}">
+                                <i class="remove icon"></i> Batal</a>
+                        </form>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%include 'layout/toastr.html'%}
+</body>
+
+</html>

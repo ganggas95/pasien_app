@@ -1,0 +1,30 @@
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; }
+.ui.ui-sidebar{
+  height: 100%;top:40px;width : 20%;position: fixed;
+  bottom: 0;
+}
+.ui.main-app{
+  left: 238px;
+  position: fixed;
+  padding-top: 83px;
+  right: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.show-menu{
+  display: block!important
+}
+
+.hide-menu{
+  display: none
+}
+
+.table-data {
+  cursor: pointer;
+}

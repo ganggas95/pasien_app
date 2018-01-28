@@ -1,0 +1,82 @@
+<div class="ui four column grid">
+  <div class="column">
+    <div class="ui fluid card">
+        <div class="content">
+            <img src="/static/img/rawat_jalan.png" alt="" class="right floated mini ui image">
+            <div class="header">
+                Rawat Jalan
+            </div>
+            <div class="meta">
+                Layanan rawat jalan
+            </div>
+            <div class="description">
+                Layanan ini untuk pasien rawat jalan
+            </div>
+            <div class="ui divider"></div>
+            <div class="extra content">
+                <a class="ui basic fluid green button" href="{{url_for('form_rawat_jalan', no_pasien=pasien.no_pasien)}}">Pilih Layanan</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui fluid card">
+        <div class="content">
+            <img src="/static/img/rawat_inap.png" alt="" class="right floated mini ui image">
+            <div class="header">
+                Rawat Inap
+            </div>
+            <div class="meta">
+                Layanan rawat inap
+            </div>
+            <div class="description">
+                Layanan ini untuk pasien rawat inap
+            </div>
+            <div class="ui divider"></div>
+            <div class="extra content">
+                <a class="ui basic fluid green button" href="{{url_for('form_rawat_inap', no_pasien=pasien.no_pasien)}}">Pilih Layanan</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui fluid card">
+        <div class="content">
+            <img src="/static/img/rujukan.png" alt="" class="right floated mini ui image">
+            <div class="header">
+                Rujukan
+            </div>
+            <div class="meta">
+                Layanan pasien rujukan
+            </div>
+            <div class="description">
+                Layanan ini untuk pasien rujukan
+            </div>
+            <div class="ui divider"></div>
+            <div class="extra content">
+                    <a class="ui basic fluid green button" href="{{url_for('form_rujukan', no_pasien=pasien.no_pasien)}}">Pilih Layanan</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui fluid card">
+        <div class="content">
+            <img src="/static/img/regular.png" alt="" class="right floated mini ui image">
+            <div class="header">
+                Regular
+            </div>
+            <div class="meta">
+                Layanan pasien regular
+            </div>
+            <div class="description">
+                Layanan ini untuk pasien regular
+            </div>
+            <div class="ui divider"></div>
+            <div class="extra content">
+                    <a class="ui basic fluid green button" href="{{url_for('form_regular', no_pasien=pasien.no_pasien)}}">Pilih Layanan</a>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

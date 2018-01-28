@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{report_title}}</title>
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/static/vendor/semantic-ui/semantic.min.css">
+    <style>
+        @page {
+            size: A4 landscape
+        }
+
+        img {
+            height: 100px;
+            width: auto;
+        }
+
+        @media print {
+            img {
+                height: 100px;
+                width: auto;
+            }
+            .header {
+                text-align: center;
+                width: 100%;
+                position: relative;
+                line-height: 100%;
+                left: 8px;
+                top: 10;
+            }
+            .header>span {
+                text-align: center;
+                font-size: 12px;
+            }
+            .img-left {
+                width: auto;
+                height: 60px;
+                float: left;
+                margin-left: 10px;
+                margin-top: 5px
+            }
+            .img-right {
+                width: 80px;
+                height: auto;
+                float: right;
+                margin-right: 10px;
+                margin-top: 5px
+            }
+            .header>h3 {
+                margin-top: 2px;
+                margin-bottom: 0px;
+            }
+            hr {
+                margin: 0;
+                top: 10px;
+                position: relative;
+                width: 99.8%;
+            }
+            .header>small {
+                font-size: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        {%include 'admin/report/pdf/page_header.html'%}
+        <p style="text-align: center">
+            Per {{start_date.strftime('%d-%B-%Y')}} s/d {{end_date.strftime('%d-%B-%Y')}}
+        </p>
+        <table class="ui table">
+            <thead>
+                <tr>
+                    <td>No</td>
+                    <td>Nama</td>
+                    <td>No. Pasien</td>
+                    <td>NIK</td>
+                    <td>Jenis Kelamin</td>
+                    <td>Gol. Darah</td>
+                    <td>Tgl. Daftar</td>
+                    <td>Status</td>
+                </tr>
+            </thead>
+            <tbody>
+                {%for pasien in pasiens%}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{pasien.nama}}</td>
+                    <td>{{pasien.no_pasien}}</td>
+                    <td>{{pasien.nik}}</td>
+                    <td>{{pasien.jk}}</td>
+                    <td>{{pasien.goldar.value}}</td>
+                    <td>{{pasien.create_at.strftime('%d-%B-%Y')}}</td>
+                    <td>{{pasien.status}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <script>window.print();</script>
+</body>
+
+</html>

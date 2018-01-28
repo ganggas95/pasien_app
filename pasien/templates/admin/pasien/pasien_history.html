@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+        <div>
+            {%include 'admin/pasien/riwayat_pelayanan.html'%}
+        </div>
+    </div>
+    <script>
+        // $('.ui.table').dataTable();
+        // $('tr.table-data').on('dblclick', function (e) {
+        //     e.preventDefault();
+        //     $('tr.table-data').each((index, el) => {
+        //         $(el).removeClass('active');
+        //     })
+        //     $(this).addClass('active');
+        //     $('form[name="register_pasien"]').find('input[name="nokk"]').val($(this).data('nokk'));
+        // });
+    </script>
+</body>
+
+</html>

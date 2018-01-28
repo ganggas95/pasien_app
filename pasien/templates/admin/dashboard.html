@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+    <script src="/static/vendor/highchart/highcharts.js"></script>
+    <script src="/static/vendor/highchart/modules/exporting.js"></script>
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+        <div class="ui grid">
+            <div class="eight wide column">
+                <div class="ui segment">
+                    <div class="ui container" id="container" style="width:100%; height:400px;"></div>
+                </div>
+            </div>
+            <div class="eight wide column">
+                <div class="ui segment">
+                    <div class="ui container" id="bar" style="width:100%; height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $(function () {
+            var pasien = 0, rj = 0, ri = 0, rujukan = 0;
+            var m_pasien = [], m_rj = [], m_ri = [], m_r = [];
+            fetch("/admin/report/statistik")
+                .then(res => { return res.json() })
+                .then(data => {
+                    pasien = data.pasien;
+                    rj = data.rawat_jalan;
+                    ri = data.rawat_inap;
+                    rujukan = data.rujukan;
+                    initializeChart();
+                })
+                .catch(err => err);
+            fetch("/admin/report/statistik_mounthly")
+                .then(res => res.json()).then(data => {
+                    data.pasien.forEach(element => {
+                        m_pasien.push(element);
+                    });
+                    data.rujukan.forEach(element => {
+                        m_r.push(element);
+                    });
+                    data.rawat_inap.forEach(element => {
+                        m_ri.push(element);
+                    });
+                    data.rawat_jalan.forEach(element => {
+                        m_rj.push(element);
+                    });
+                    initializeChart2();
+                }).catch(err => err);
+            function initializeChart() {
+                var myChart = Highcharts.chart('container', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Statistik Data Puskesmas'
+                    },
+                    subtitle: {
+                        text: 'Puskesmas Gangga'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> <br/> Jumlah : {point.y}'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %<br/> Jumlah : {point.y}',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: [{
+                            name: 'Pasien',
+                            y: pasien
+                        }, {
+                            name: 'Rawat Jalan',
+                            y: rj,
+                            sliced: true,
+                            selected: true
+                        }, {
+                            name: 'Rawat Inap',
+                            y: ri
+                        }, {
+                            name: 'Rujukan',
+                            y: rujukan
+                        }]
+                    }]
+                });
+            }
+
+            function initializeChart2() {
+                var myChart = Highcharts.chart('bar', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Laporan Bulanan'
+                    },
+                    subtitle: {
+                        text: 'Puskesmas Gangga'
+                    },
+                    xAxis: {
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Jumlah'
+                        }
+                    },
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true
+                            },
+                            enableMouseTracking: true
+                        }
+                    },
+                    series: [{
+                        name: 'Pasien',
+                        data: m_pasien.map(data => data)
+                    }, {
+                        name: 'Rawat Jalan',
+                        data: m_rj.map(data => data)
+                    }, {
+                        name: 'Rawat Inap',
+                        data: m_ri.map(data => data)
+                    }, {
+                        name: 'Rujukan',
+                        data: m_r.map(data => data)
+                    }]
+                });
+            }
+        });
+    </script> {%include 'layout/toastr.html'%}
+</body>
+
+</html>

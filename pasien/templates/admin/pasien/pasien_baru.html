@@ -1,0 +1,82 @@
+<div class="eight wide column">
+    <div class="ui segment">
+        <div class="ui container">
+            {%if not cek and not visible%}
+            <h3 class="ui header">
+                <div class="content">
+                    Pasien Baru
+                    <div class="sub header">Form Dibawah ini adalah form untuk pasien baru</div>
+                </div>
+            </h3>
+            <div class="ui divider"></div>
+            <form class="ui form">
+                <div class="field">
+                    <label>Masukkan NIK>Click Cek Nik</label>
+                    <div class="ui right labeled left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="nik" required placeholder="NIK Pasien">
+                        <button class="ui tag label" type="submit">
+                            Cek Nik
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {%endif%} {%if cek and visible %} {%include 'admin/pasien/pasien_ada.html'%} {%elif cek and not visible %}
+            <form class="ui form" method="POST" name="register_pasien">
+                <input type="hidden" name="nokk">
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Nama</label>
+                            <input type="text" name="nama" required placeholder="Nama Pasien">
+                        </div>
+                        <div class="field disabled">
+                            <label>NIK Anda</label>
+                            <input type="text" disabled required name="nik" value="{{nik if nik else '-' }}" placeholder="NIK Pasien">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="fields">
+                        <div class="eight wide field">
+                            <label>Jenis Kelamin</label>
+                            <select class="ui fluid dropdown" required name="gender">
+                                <option value="">Jenis Kelamin</option>
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="eight wide field">
+                            <label>Gol. Darah</label>
+                            <select class="ui fluid dropdown" required name="goldar">
+                                <option value="">Golonga Darah</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="O">O</option>
+                                <option value="AB">AB</option>
+                                <option value="-">-</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="fields">
+                        <div class="eight wide field">
+                            <label>Usia</label>
+                            <input type="number" name="usia" placeholder="Usia Pasien">
+                        </div>
+                        <div class="eight wide field">
+                            <label>No Telp.</label>
+                            <input type="text" name="no_telp" placeholder="No Telp/Hp">
+                        </div>
+                    </div>
+                </div>
+                <a class="ui button negative icon" href="{{url_for('register_pasien')}}">
+                    <i class="remove icon"></i> Batal</a>
+                <button class="ui teal button icon" type="submit">
+                    <i class="save icon"></i> Simpan</button>
+            </form>
+            {%endif%}
+        </div>
+    </div>
+</div>

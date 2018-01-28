@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+    <link href="/static/vendor/datatables/css/dataTables.semanticui.min.css" rel="stylesheet" type="text/css">
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables/js/dataTables.semanticui.min.js"></script>
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+        <div class="ui card fluid">
+            <div class="content">
+                <div class="description">
+                    <table class="ui unstackable table">
+                        <thead>
+                            <tr>
+                                <th>No. </th>
+                                <th>Tanggal</th>
+                                <th>Keluhan</th>
+                                <th>Tindakan</th>
+                                <th>Diagnosa</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for rj in rawat_jalan%}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{rj.tanggal.strftime('%d-%B-%Y')}}</td>
+                                <td>{{rj.keluhan}}</td>
+                                <td>{{rj.tindakan}}</td>
+                                <td>{{rj.diagnosa}}</td>
+                                <td>{{rj.status}}</td>
+
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('.ui.table').dataTable();
+    </script>
+</body>
+
+</html>

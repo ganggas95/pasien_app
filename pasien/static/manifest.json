@@ -1,0 +1,13 @@
+{
+  "short_name" : "Aplikasi SIMPENPAS",
+  "name" : "Simpenpas v0.1",
+  "icons" : [{
+    "src" : "/static/img/indonesia.ico",
+    "sizes" : "64x64",
+    "type" : "image/x-icon"
+  }],
+  "start_url" : "http://localhost:3200",
+  "display" : "standalone",
+  "theme_color" : "#000000",
+  "background_color" : "#ffffff"
+}

@@ -1,0 +1,12 @@
+<div class="ui negative message">
+  {% with messages = get_flashed_messages(with_categories = True) %} {% if messages %} {% for category, message in messages
+      %}
+    <div class="header">
+      {{message}}
+    </div>
+
+    {% endfor %} {% endif %} {% endwith %}
+    <br/>
+    <a class="ui button icon green" href="{{url_for('register_pasien')}}">
+        <i class="history icon"></i> Coba Lagi</a>
+</div>

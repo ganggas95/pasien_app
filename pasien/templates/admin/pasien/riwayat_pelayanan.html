@@ -1,0 +1,86 @@
+<div class="ui four column grid">
+    <div class="column">
+      <div class="ui fluid card">
+          <div class="content">
+              <img src="/static/img/rawat_jalan.png" alt="" class="right floated mini ui image">
+              <div class="header">
+                  Rawat Jalan
+              </div>
+              <div class="meta">
+                  <p>Nama Pasien : {{pasien.nama}}</p>
+                  <p>Riwayat : {{pasien.riwayat_rj|length}} x pelayanan</p>
+              </div>
+              <div class="description">
+                  Riwayat Pelayanan pasien rawat jalan
+              </div>
+              <div class="ui divider"></div>
+              <div class="extra content">
+                  <a class="ui basic fluid green button" href="{{url_for('riwayat_rawat_jalan', id=pasien.id)}}">Detail Layanan</a>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui fluid card">
+          <div class="content">
+              <img src="/static/img/rawat_inap.png" alt="" class="right floated mini ui image">
+              <div class="header">
+                  Rawat Inap
+              </div>
+              <div class="meta">
+                  <p>Nama Pasien : {{pasien.nama}}</p>
+                  <p>Riwayat : {{pasien.riwayat_ri|length}} x pelayanan</p>
+              </div>
+              <div class="description">
+                  Riwayat Pelayanan pasien rawat inap
+              </div>
+              <div class="ui divider"></div>
+              <div class="extra content">
+                  <a class="ui basic fluid green button" href="{{url_for('riwayat_rawat_inap', id=pasien.id)}}">Detail Layanan</a>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui fluid card">
+          <div class="content">
+              <img src="/static/img/rujukan.png" alt="" class="right floated mini ui image">
+              <div class="header">
+                  Rujukan
+              </div>
+              <div class="meta">
+                  <p>Nama Pasien : {{pasien.nama}}</p>
+                  <p>Riwayat : {{pasien.riwayat_rujukan|length}} x pelayanan</p>
+              </div>
+              <div class="description">
+                  Riwayat Pelayanan pasien rujukan
+              </div>
+              <div class="ui divider"></div>
+              <div class="extra content">
+                  <a class="ui basic fluid green button" href="{{url_for('riwayat_rawat_rujukan', id=pasien.id)}}">Detail Layanan</a>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="column">
+    <div class="ui fluid card">
+        <div class="content">
+            <img src="/static/img/regular.png" alt="" class="right floated mini ui image">
+            <div class="header">
+                Regular
+            </div>
+            <div class="meta">
+                <p>Nama Pasien : {{pasien.nama}}</p>
+                <p>Riwayat : {{pasien.regular|length}} x pelayanan</p>
+            </div>
+            <div class="description">
+                Riwayat Pelayanan pasien regular
+            </div>
+            <div class="ui divider"></div>
+            <div class="extra content">
+                <a class="ui basic fluid green button" href="{{url_for('riwayat_regular', id=pasien.id)}}">Detail Layanan</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

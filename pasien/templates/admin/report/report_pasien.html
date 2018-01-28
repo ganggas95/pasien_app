@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+    <link href="/static/vendor/datatables/css/dataTables.semanticui.min.css" rel="stylesheet" type="text/css">
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables/js/dataTables.semanticui.min.js"></script>
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+
+        <div class="ui clearing segment">
+            <form method="get" class="ui form">
+                <div class="ui fields">
+                    <div class="ui field">
+                        <input type="date" name="start_date" value="{{start_date}}">
+                    </div>
+                    <div class="ui field">
+                        <input type="date" name="end_date" value="{{end_date}}">
+                    </div>
+                    <div class="ui field">
+                        <div class="ui buttons">
+                            {%if start_date and end_date%}
+                            <a class="ui icon button red" target="_blank" href="{{url_for('export_pasien_pdf', start_date=start_date, end_date=end_date)}}">
+                                <i class="file pdf outline icon"></i> Export as PDF</a>
+                            <a class="ui icon button teal" target="_blank" href="{{url_for('export_pasien_excel', start_date=start_date, end_date=end_date)}}">
+                                <i class="file excel outline icon"></i> Export as excel</a>
+                            {%endif%}
+                            <button type="submit" name="type" class="ui icon button teal" value="show">
+                                <i class="file table outline icon"></i> Filter</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="ui card fluid">
+            <div class="content">
+                <div class="description">
+                    <table class="ui unstackable table">
+                        <thead>
+                            <tr>
+                                <th>No. </th>
+                                <th>Name</th>
+                                <th>No. Pasien</th>
+                                <th>NIK</th>
+                                <th>Alamat</th>
+                                <th>Usia</th>
+                                <th>J. Kelamin</th>
+                                <th>Gol. Darah</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for pasien in pasiens%}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td style="white-space: nowrap">{{pasien.nama}}</td>
+                                <td style="white-space: nowrap">{{pasien.no_pasien}}</td>
+                                <td>{{pasien.nik}}</td>
+                                <td>{{pasien.keluarga.alamat}}</td>
+                                <td>{{pasien.usia}}</td>
+                                <td>{{pasien.jk}}</td>
+                                <td>{{pasien.goldar.value}}</td>
+                                <td>{{pasien.status}}</td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('.ui.table').dataTable();
+
+    </script>
+    {%include 'layout/toastr.html'%}
+</body>
+
+</html>

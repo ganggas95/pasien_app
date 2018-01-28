@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+
+    <link href="/static/vendor/datatables/css/dataTables.semanticui.min.css" rel="stylesheet" type="text/css">
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables/js/dataTables.semanticui.min.js"></script>
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+        <div class="ui grid">
+            {%if not cek_old and not visible_old%}
+                {%include 'admin/pasien/pasien_baru.html'%}
+            {%else%}
+                {%include 'admin/pasien/daftar_pelayanan.html'%}
+            {%endif%}
+            {%if not cek and not cek_old and not visible%}
+                {%include 'admin/pasien/pasien_lama.html'%}
+            {%endif%}
+            {%if cek and not visible and not visible_old and not cek_old%}
+                {%include 'admin/pasien/table_keluarga.html'%}
+            {%endif%}
+        </div>
+    </div>
+    <script>
+        $('.ui.table').dataTable();
+        $('tr.table-data').on('click', function (e) {
+            e.preventDefault();
+            $('tr.table-data').each((index, el) => {
+                $(el).removeClass('active positive');
+            })
+            $(this).addClass('active positive');
+            $('form[name="register_pasien"]').find('input[name="nokk"]').val($(this).data('nokk'));
+        });
+    </script>
+    {%include 'layout/toastr.html'%}
+</body>
+
+</html>

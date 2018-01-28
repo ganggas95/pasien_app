@@ -20,6 +20,7 @@ lib64/
 parts/
 sdist/
 var/
+nvenv/
 wheels/
 *.egg-info/
 .installed.cfg
@@ -81,6 +82,11 @@ celerybeat-schedule
 
 # dotenv
 .env
+
+migrations
+.sonarlint
+.vscode
+
 
 # virtualenv
 .venv

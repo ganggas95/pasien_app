@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+    <link href="/static/vendor/datatables/css/dataTables.semanticui.min.css" rel="stylesheet" type="text/css">
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables/js/dataTables.semanticui.min.js"></script>
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+        <div class="ui grid">
+            <div class="seven wide column">
+                <button class="ui button" id="button-add">
+                    <i class="plus icon"></i> Tambah User</button>
+                <div class="ui divider"></div>
+                <table class="ui fluid unstackable table">
+                    <thead>
+                        <tr>
+                            <th>No. </th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for user in users%}
+                        <tr>
+                            <td>{{loop.index}}</td>
+                            <td style="white-space: nowrap">{{user.username}}</td>
+                            <td style="white-space: nowrap">{{user.email}}</td>
+                            <td>
+                                <div class="ui buttons mini">
+                                    <button class="ui button positive icon btn-edit" data-username="{{user.username}}" data-email="{{user.email}}" data-href="{{url_for('user_edit', id=user.id_user)}}"
+                                        data-pk="{{user.id_user}}">
+                                        <i class="pencil icon"></i>
+                                    </button>
+                                    <button class="ui button teal color icon btn-edit-password" data-href="{{url_for('user_edit_password', id=user.id_user)}}"
+                                        data-pk="{{user.id_user}}">
+                                        <i class="key icon"></i>
+                                    </button>
+                                    <button class="ui button negative icon btn-delete" data-pk="{{user.id_user}}" data-href="{{url_for('user_delete')}}">
+                                        <i class="trash icon"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="ui mini modal" id="modal-add">
+        <div class="header">
+            <i class="user plus icon"></i> Tambah User</div>
+        <div class="content">
+            <form class="ui form" name="form-add" method="POST">
+                <div class="ui field required">
+                    <label>Username : </label>
+                    <input type="text" required name="username" id="username" placeholder="Masukkan Username">
+                </div>
+                <div class="ui field required">
+                    <label>Email : </label>
+                    <input type="email" required name="email" id="email" placeholder="Masukkan Email">
+                </div>
+                <div class="ui field required">
+                    <label>Password : </label>
+                    <input type="password" required name="password" id="password" placeholder="Masukkan Password">
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui button" id="submit_add">Simpan</div>
+            <div class="ui cancel button">Cancel</div>
+        </div>
+    </div>
+
+    <div class="ui mini modal" id="modal-edit">
+        <div class="header">
+            <i class="pencil icon"></i> Edit User</div>
+        <div class="content">
+            <form class="ui form" name="form-edit" method="POST">
+                <div class="ui field required">
+                    <label>Username : </label>
+                    <input type="text" required name="username" placeholder="Masukkan Username">
+                </div>
+                <div class="ui field required">
+                    <label>Email : </label>
+                    <input type="email" required name="email" placeholder="Masukkan Email">
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui button" id="submit_edit">Simpan</div>
+            <div class="ui cancel button">Cancel</div>
+        </div>
+    </div>
+
+    <div class="ui mini modal" id="modal-edit-password">
+            <div class="header">
+                <i class="key icon"></i> Edit Password</div>
+            <div class="content">
+                <form class="ui form" name="form-edit-password" method="POST">
+                    <!-- <div class="ui field required">
+                        <label>Password Lama : </label>
+                        <input type="password" required name="old_password" placeholder="Masukkan Password Lama">
+                    </div> -->
+                    <div class="ui field required">
+                        <label>Password Baru : </label>
+                        <input type="password" required name="new_password" placeholder="Masukkan Password Baru">
+                    </div>
+                </form>
+            </div>
+            <div class="actions">
+                <div class="ui button" id="submit_edit_password">Simpan</div>
+                <div class="ui cancel button">Cancel</div>
+            </div>
+        </div>
+
+        <div class="ui mini modal negative" id="modal-delete">
+                <div class="header">
+                    <i class="trash icon"></i> Hapus User</div>
+                <div class="content">
+                    <form name="form-delete" method="POST">
+                        <input type="hidden" name="id" required>
+                        <div class="ui warning message">
+                                    <div class="header">
+                                      Yakin akan menghapus data ini?
+                                    </div>
+                                  </div>
+                    </form>
+                </div>
+                <div class="actions">
+                    <div class="ui button" id="submit_delete">Simpan</div>
+                    <div class="ui cancel button">Cancel</div>
+                </div>
+            </div>
+
+    <script>
+        $('.ui.table').dataTable();
+        $('#button-add').on('click', () => {
+            $('#modal-add').modal('show');
+        })
+        $('#submit_add').click(function () {
+            $('form[name="form-add"]').submit();
+        });
+        $('.btn-edit').click(function () {
+            $('form[name="form-edit"]').attr('action', $(this).data('href'));
+            $('form[name="form-edit"]').find('input[name="username"]').val($(this).data('username'));
+            $('form[name="form-edit"]').find('input[name="email"]').val($(this).data('email'));
+            $('#modal-edit').modal('show');
+        });
+        $('#submit_edit').click(function(){
+          $('form[name="form-edit"]').submit();
+        })
+        $('.btn-edit-password').click(function () {
+            $('form[name="form-edit-password"]').attr('action', $(this).data('href'));
+            $('#modal-edit-password').modal('show');
+        });
+        $('#submit_edit_password').click(function () {
+            $('form[name="form-edit-password"]').submit();
+        });
+        $('.btn-delete').click(function(){
+            $('form[name="form-delete"]').attr('action',$(this).data('href'));
+            $('form[name="form-delete"]').find('input[name="id"]').val($(this).data('pk'))
+            $('#modal-delete').modal('show');
+        });
+        $('#submit_delete').click(function(){
+            $('form[name="form-delete"]').submit();
+        });
+
+    </script>
+    {%include 'layout/toastr.html'%}
+</body>
+
+</html>

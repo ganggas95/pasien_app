@@ -1,0 +1,53 @@
+<div class="black ui vertical ui-sidebar inverted menu " style="padding-top: 10px">
+    <h4 class="ui center aligned icon header" style="color:azure">
+        <i class="circular users icon"></i>
+        <strong>{{current_user.username}}</strong>
+        <br/>
+        <span style="color: grey">{{current_user.email}}</span>
+        <br/>
+        <br/>
+    </h4>
+    <a class="item" href="{{url_for('admin_dashboard')}}">
+        <i class="dashboard icon"></i> Dashboard</a>
+    <div class="item"><i class="handicap icon"></i>
+        <div class="header">Data Pasien</div>
+        <div class="menu">
+            <a class="item" href="{{url_for('register_pasien')}}">Register Pasien</a>
+            <a class="item" href="{{url_for('data_keluarga')}}">Data Keluarga</a>
+            <a class="item" href="{{url_for('all_pasien')}}">Semua Pasien</a>
+        </div>
+    </div>
+    <div class="item"><i class="book icon"></i>
+        <div class="header">Report</div>
+        <div class="menu">
+            <a class="item" href="{{url_for('report_regular')}}">Report Regular</a>
+            <a class="item" href="{{url_for('report_pasien')}}">Report Pasien</a>
+            <a class="item" href="{{url_for('report_rj')}}">Report Rawat Jalan</a>
+            <a class="item" href="{{url_for('report_ri')}}">Report Rawat Inap</a>
+            <a class="item" href="{{url_for('report_rujukan')}}">Report Rujukan</a>
+        </div>
+    </div>
+    <a class="item" href="{{url_for('users')}}"><i class="users icon"></i> Data User</a>
+    <a class="item" id="btn-logout"><i class="sign out icon"></i> Logout</button>
+    </a>
+</div>
+<div class="ui mini modal negative" id="modal-logout">
+        <div class="header">
+            <i class="sign out icon"></i> Logout User</div>
+        <div class="content">
+                <div class="ui warning message">
+                            <div class="header">
+                              Anda yakin akan logout dari aplikasi?
+                            </div>
+                          </div>
+        </div>
+        <div class="actions">
+            <a class="ui button" href="{{url_for('admin_logout')}}">Simpan</a>
+            <div class="ui cancel button">Cancel</div>
+        </div>
+    </div>
+    <script>
+        $('#btn-logout').click(function(){
+            $('#modal-logout').modal('show');
+        })
+    </script>

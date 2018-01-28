@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+    <link href="/static/vendor/datatables/css/dataTables.semanticui.min.css" rel="stylesheet" type="text/css">
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables/js/dataTables.semanticui.min.js"></script>
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+
+        <button class="ui button" id="btn-add">
+            <i class="user plus icon"></i> Tambah Data</button>
+        <div class="ui divider"></div>
+        <div class="ui card fluid">
+            <div class="content">
+                <div class="description">
+                    <table class="ui unstackable table">
+                        <thead>
+                            <tr>
+                                <th>No. </th>
+                                <th>Nama Kepala Keluarga</th>
+                                <th>No. KK</th>
+                                <th>Alamat</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for keluarga in keluargas%}
+                            <tr class="table-data" data-href="{{url_for('pasien_keluarga', id=keluarga.id)}}">
+                                <td>{{loop.index}}</td>
+                                <td style="white-space: nowrap">{{keluarga.kepala_keluarga}}</td>
+                                <td style="white-space: nowrap">{{keluarga.no_kk}}</td>
+                                <td>{{keluarga.alamat}}</td>
+                                <td>
+                                    <div class="ui buttons mini">
+                                        <button class="ui button positive icon btn-edit" data-no="{{keluarga.no_kk}}" data-alamat="{{keluarga.alamat}}" data-kk="{{keluarga.kepala_keluarga}}" data-href="{{url_for('edit_keluarga', id=keluarga.id)}}">
+                                            <i class="pencil icon"></i>
+                                        </button>
+                                        <button class="ui button negative icon btn-delete" data-pk="{{keluarga.id}}">
+                                            <i class="trash icon"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui mini modal" id="modal-add">
+        <div class="header">
+            <i class="user plus icon"></i> Tambah Data</div>
+        <div class="content">
+            <form class="ui form" name="form-add" method="POST">
+                <div class="ui field required">
+                    <label>No KK : </label>
+                    <input type="text" required name="no_kk" placeholder="Masukkan No. KK">
+                </div>
+                <div class="ui field required">
+                    <label>Kepala Keluarga : </label>
+                    <input type="text" required name="kepala_keluarga" placeholder="Masukkan Nama KK">
+                </div>
+                <div class="ui field">
+                    <label>Alamat : </label>
+                    <textarea rows="2" name="alamat" placeholder="Masukkan Alamat"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui button" id="submit_add">Simpan</div>
+            <div class="ui cancel button">Cancel</div>
+        </div>
+    </div>
+
+    <div class="ui mini modal" id="modal-edit">
+        <div class="header">
+            <i class="pencil icon"></i> Edit Keluarga</div>
+        <div class="content">
+            <form class="ui form" name="form-edit" method="POST">
+                <div class="ui field required">
+                    <label>No KK : </label>
+                    <input type="text" required name="no_kk" placeholder="Masukkan No. KK">
+                </div>
+                <div class="ui field required">
+                    <label>Kepala Keluarga : </label>
+                    <input type="text" required name="kepala_keluarga" placeholder="Masukkan Nama KK">
+                </div>
+                <div class="ui field">
+                    <label>Alamat : </label>
+                    <textarea rows="2" name="alamat" placeholder="Masukkan Alamat"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui button" id="submit_edit">Simpan</div>
+            <div class="ui cancel button">Cancel</div>
+        </div>
+    </div>
+    <div class="ui mini modal negative" id="modal-delete">
+        <div class="header">
+            <i class="trash icon"></i> Hapus Keluarga</div>
+        <div class="content">
+            <form name="form-delete" method="POST" action="{{url_for('delete_keluarga')}}">
+                <input type="hidden" name="id" required>
+                <div class="ui warning message">
+                    <div class="header">
+                        Yakin akan menghapus data ini?
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui button" id="submit_delete">Simpan</div>
+            <div class="ui cancel button">Cancel</div>
+        </div>
+    </div>
+    <script>
+        $('.ui.table').dataTable();
+        $('#btn-add').click(function () {
+            $('#modal-add').modal('show');
+        })
+
+        $('tr').on('dblclick', function(){
+          window.location.href = $(this).data('href');
+        })
+        $('.btn-edit').click(function () {
+            $('form[name="form-edit"]').attr('action', $(this).data('href'));
+            $('form[name="form-edit"]').find('input[name="kepala_keluarga"]').val($(this).data('kk'));
+            $('form[name="form-edit"]').find('input[name="no_kk"]').val($(this).data('no'));
+            $('form[name="form-edit"]').find('textarea[name="alamat"]').val($(this).data('alamat'));
+            $('#modal-edit').modal('show');
+
+        })
+        $('.btn-delete').click(function () {
+            $('form[name="form-delete"]').find('input[name="id"]').val($(this).data('pk'));
+            $('#modal-delete').modal('show');
+        });
+        $('#submit_delete').click(function(){
+            $('form[name="form-delete"]').submit();
+        })
+        $('#submit_edit').click(function(){
+            $('form[name="form-edit"]').submit();
+        })
+        $('#submit_add').click(function(){
+            $('form[name="form-add"]').submit();
+        })
+
+    </script>
+    {%include 'layout/toastr.html'%}
+</body>
+
+</html>

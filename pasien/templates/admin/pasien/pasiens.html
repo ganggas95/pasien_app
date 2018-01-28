@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {%include "layout/meta.html"%} {%include "layout/script.html"%}
+    <link href="/static/vendor/datatables/css/dataTables.semanticui.min.css" rel="stylesheet" type="text/css">
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables/js/dataTables.semanticui.min.js"></script>
+</head>
+
+<body>
+    {%include 'layout/header.html'%} {%include 'layout/sidebar.html'%}
+    <div class="ui main-app">
+        {%include 'layout/page_header.html'%}
+        <div class="ui card fluid">
+            <div class="content">
+                <div class="description">
+                    <table class="ui unstackable table">
+                        <thead>
+                            <tr>
+                                <th>No. </th>
+                                <th>Name</th>
+                                <th>No. Pasien</th>
+                                <th>NIK</th>
+                                <th>Alamat</th>
+                                <th>Usia</th>
+                                <th>J. Kelamin</th>
+                                <th>Gol. Darah</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for pasien in pasiens%}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td style="white-space: nowrap">{{pasien.nama}}</td>
+                                <td style="white-space: nowrap">{{pasien.no_pasien}}</td>
+                                <td>{{pasien.nik}}</td>
+                                <td>{{pasien.keluarga.alamat}}</td>
+                                <td>{{pasien.usia}}</td>
+                                <td>{{pasien.jk}}</td>
+                                <td>{{pasien.goldar.value}}</td>
+                                <td>{{pasien.status}}</td>
+                                <td>
+                                    <div class="ui buttons mini">
+                                        <a class="ui button teal icon" href="{{url_for('pdf_pasien', no_pasien=pasien.no_pasien)}}" target="_blank">
+                                            <i class="print icon"></i>
+                                        </a>
+                                        <a class="ui button icon" href="{{url_for('edit_pasien', id=pasien.id)}}">
+                                            <i class="pencil icon"></i>
+                                        </a>
+                                        <a class="ui button icon" href="{{url_for('history_pasien', id=pasien.id)}}">
+                                            <i class="history icon"></i>
+                                        </a>
+                                        <button class="ui button negative icon btn-delete" data-pk="{{pasien.id}}" data-href="{{url_for('delete_pasien')}}">
+                                            <i class="trash icon"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui mini modal negative" id="modal-delete">
+            <div class="header">
+                <i class="trash icon"></i> Hapus User</div>
+            <div class="content">
+                <form name="form-delete" method="POST">
+                    <input type="hidden" name="id" required>
+                    <div class="ui warning message">
+                                <div class="header">
+                                  Yakin akan menghapus data ini?
+                                </div>
+                              </div>
+                </form>
+            </div>
+            <div class="actions">
+                <div class="ui button" id="submit_delete">Simpan</div>
+                <div class="ui cancel button">Cancel</div>
+            </div>
+        </div>
+    <script>
+        $('.ui.table').dataTable();
+        $('.btn-delete').on('click', function(){
+          $('form[name="form-delete"]').attr('action',$(this).data('href'));
+          $('form[name="form-delete"]').find('input[name="id"]').val($(this).data('pk'))
+          $('#modal-delete').modal('show');
+        })
+        $('#submit_delete').click(function(){
+          $('form[name="form-delete"]').submit()
+        })
+    </script>
+    {%include 'layout/toastr.html'%}
+</body>
+
+</html>

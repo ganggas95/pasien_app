@@ -1,0 +1,33 @@
+<div class="eight wide column">
+    <div class="ui segment">
+        <h5 class="ui header">
+            <i class="list icon"></i>
+            <div class="content">
+                Data Keluarga
+                <div class="sub header">Klik untuk pilih keluarga.</div>
+            </div>
+        </h5>
+        <div class="ui divider"></div>
+        <table class="ui unstackable table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Kepala Keluarga</th>
+                    <th>No KK</th>
+                    <th>Alamat</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for k in keluarga%}
+                <tr class="table-data" data-nokk="{{k.no_kk}}">
+                    <td>{{loop.index}}</td>
+                    <td>{{k.kepala_keluarga}}</td>
+                    <td>{{k.no_kk}}</td>
+                    <td>{{k.alamat}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+
+    </div>
+</div>

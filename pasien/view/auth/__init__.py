@@ -1,0 +1,1 @@
+from pasien.view.auth import auth
