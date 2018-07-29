@@ -49,3 +49,6 @@ restplus.init_app(blueprint)
 restplus.add_namespace(ns_admin)
 restplus.add_namespace(ns_pasien)
 app.register_blueprint(blueprint)
+
+if __name__ == "__main__":
+    app.run()
