@@ -21,7 +21,7 @@ app.config['SECRET_KEY'] = "PUSKESMAS Bismillah!#@$$%^()"
 DATA_FOLDER = os.path.sep+"data"+os.path.sep
 app.config['DATA_FOLDER'] = app.root_path + DATA_FOLDER
 app.config['THREADS_PER_PAGE'] = 2
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://uqkoptfi4dswoven:MWdsDu7z0hTiZUA7JH4@byoo9phnm-mysql.services.clever-cloud.com:3306/byoo9phnm/puskesmas_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://uqkoptfi4dswoven:MWdsDu7z0hTiZUA7JH4@byoo9phnm-mysql.services.clever-cloud.com:3306/byoo9phnm'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -49,6 +49,7 @@ restplus.init_app(blueprint)
 restplus.add_namespace(ns_admin)
 restplus.add_namespace(ns_pasien)
 app.register_blueprint(blueprint)
+
 
 if __name__ == "__main__":
     app.run()
